@@ -1,5 +1,45 @@
 # PyTorch Learning by Doing
 
+这是一个 PyTorch 干中学（Learning by Doing）教学项目。通过"填空练习 + 参考对照"的双文件模式和三阶段 24 关渐进路线，从纯手工线性回归一路实现到 mini-BERT / mini-GPT。面向想通过动手编码系统掌握 PyTorch 的学习者。
+
+## 快速开始
+
+### 环境要求
+
+- Python 3.12+
+- PyTorch 2.x（自动适配 cuda / mps / cpu）
+- scikit-learn、numpy、pandas、matplotlib、torchmetrics 等（见 requirements.txt）
+
+### 环境搭建
+
+```bash
+# 创建并激活虚拟环境
+python3 -m venv .venv
+source .venv/bin/activate
+
+# 安装依赖
+pip install -r requirements.txt
+```
+
+### 开始学习
+
+1. 进入 `practice/` 目录，打开 `01_pra_linear_regression.py`，按 TODO 线索补全留白代码
+2. 运行验证通过后，对照 `01_ans_linear_regression.py` 复盘
+
+## 仓库结构
+
+```
+.
+├── README.md                          # 项目说明（本文件）
+├── requirements.txt                   # 核心依赖
+├── practice/                          # 关卡代码，每关 ans 参考版与 pra 练习版成对
+│   ├── 01_ans_linear_regression.py    # 参考版：完整代码 + 详细注释
+│   └── 01_pra_linear_regression.py    # 练习版：核心代码留白 + TODO 线索
+├── data/                              # 本地数据集（如 tiny_shakespeare.txt）
+├── doc/                               # 教学文档
+└── checkpoint/                        # 模型保存目录
+```
+
 ## 一、教学模式架构
 
 ### 1. 双文件交付模式
@@ -37,10 +77,10 @@
 | 关卡 | 升级环节 | 核心内容 | 数据集 |
 |---|---|---|---|
 | 01 | 全链路 | 纯手工线性回归，七步基础链路 | 程序生成（合成回归数据） |
-| 02 | Step 4 + Step 6 | nn.Module 基础 + nn.Linear、nn.MSELoss、optim.SGD，并引入 nn.Sequential 快速搭建 | 程序生成（合成回归数据） |
+| 02 | Step 4 + Step 6 | nn.Module 基础 + nn.Linear、nn.MSELoss、optim.SGD，并引入 nn.Sequential 快速搭建；引入 torchmetrics，手写 mae/r2 指标及列表聚合对照替换为 MeanAbsoluteError / R2Score（update 逐 batch 累计 + compute 期末汇总，与手写 epoch 级聚合逻辑同构） | 程序生成（合成回归数据） |
 | 03 | Step 3 + Step 6 | Dataset/DataLoader、真正的 mini-batch 训练 | 程序生成（合成回归数据） |
 | 04 | Step 3 + Step 5 | 真实数据集、特征工程落地、Adam + 学习率调度器 | sklearn 本地数据集（diabetes/wine 等，零下载） |
-| 05 | 任务切换 | 分类任务：交叉熵 loss、准确率指标 | 程序生成（sklearn make_classification） |
+| 05 | 任务切换 | 分类任务：交叉熵 loss、准确率指标；手写准确率后对照 torchmetrics 的 Accuracy / F1Score | 程序生成（sklearn make_classification） |
 | 06 | Step 4 | MLP + 激活函数 + 正则化（dropout/weight decay）；同一网络用 nn.Sequential/nn.ModuleList/nn.ModuleDict 三种方式组织，对比适用场景 | 程序生成（sklearn make_classification） |
 | 07 | Step 6 + Step 7 | 模型保存/加载、早停、训练可视化 | 沿用之前关卡数据 |
 
